@@ -10,6 +10,20 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
+    
+    public $paginate = [
+        'limit' => 25,
+        'users' => [
+        'Users.user_id' => 'asc'
+        ]
+    ];
+    
+    /* Initialize */
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('Paginator');
+    }
 
     /**
      * Index method
@@ -19,14 +33,8 @@ class UsersController extends AppController
     public function index()
     {
         $users = $this->Users->find('all');
+        $this->set('users', $this->paginate());
         $this->set(compact('users'));
-        
-        
-        /*$this->paginate = [
-            'contain' => ['Users']
-        ];
-        $this->set('users', $this->paginate($this->Users));
-        $this->set('_serialize', ['users']);*/
     }
 
     /**
