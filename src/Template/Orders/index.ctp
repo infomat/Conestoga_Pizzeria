@@ -25,8 +25,8 @@
         <tbody>
             <?php foreach ($orders as $order): ?>
             <tr>
-                <td><?= $order->has('order') ? $this->Html->link($order->order->order_id, ['controller' => 'Orders', 'action' => 'view', $order->order->order_id]) : '' ?></td>
-                <td><?= $order->has('user') ? $this->Html->link($order->user->user_id, ['controller' => 'Users', 'action' => 'view', $order->user->user_id]) : '' ?></td>
+                <td><?= $this->Number->format($order->order_id) ?></td>
+                <td><?= $order->has('user') ? $this->Html->link($order->user->name, ['controller' => 'Users', 'action' => 'view', $order->user->user_id]) : '' ?></td>
                 <td><?= h($order->size) ?></td>
                 <td><?= h($order->cruststyle) ?></td>
                 <td><?= $this->Number->format($order->quantity) ?></td>

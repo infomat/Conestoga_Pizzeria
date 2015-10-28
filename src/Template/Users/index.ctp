@@ -12,8 +12,7 @@
                 <th><?= $this->Paginator->sort('user_id') ?></th>
                 <th><?= $this->Paginator->sort('role') ?></th>
                 <th><?= $this->Paginator->sort('email') ?></th>
-                <th><?= $this->Paginator->sort('firstname') ?></th>
-                <th><?= $this->Paginator->sort('lastname') ?></th>
+                <th><?= $this->Paginator->sort('name') ?></th>
                 <th><?= $this->Paginator->sort('address') ?></th>
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
@@ -21,11 +20,10 @@
         <tbody>
             <?php foreach ($users as $user): ?>
             <tr>
-                <td><?= $user->has('user') ? $this->Html->link($user->user->user_id, ['controller' => 'Users', 'action' => 'view', $user->user->user_id]) : '' ?></td>
+                <td><?= h($user->user_id)?></td>
                 <td><?= h($user->role) ?></td>
                 <td><?= h($user->email) ?></td>
-                <td><?= h($user->firstname) ?></td>
-                <td><?= h($user->lastname) ?></td>
+                <td><?= h($user->name) ?></td>
                 <td><?= h($user->address) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $user->user_id]) ?>

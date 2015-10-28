@@ -11,9 +11,12 @@ use App\Controller\AppController;
 class OrdersController extends AppController
 {
     public $paginate = [
-        'limit' => 25,
+        'sortWhitelist' => [
+            'order_id', 'orderdate', 'modified', 'iscompleted'
+        ],
+        'limit' => 20,
         'order' => [
-        'Orders.order_id' => 'asc'
+            'Orders.order_id' => 'asc'
         ]
     ];
     
@@ -23,6 +26,7 @@ class OrdersController extends AppController
         parent::initialize();
         $this->loadComponent('Paginator');
     }
+    
     /**
      * Index method
      *
@@ -31,7 +35,7 @@ class OrdersController extends AppController
     
     public function index()
     {
-        $orders = $this->Orders->find('all');
+        $orders = $this->Orders->find('all')->contain(['Users']);
         $this->set('orders', $this->paginate());
         $this->set(compact('orders'));
     }

@@ -29,12 +29,8 @@
             <td><?= h($user->password) ?></td>
         </tr>
         <tr>
-            <th><?= __('Firstname') ?></th>
-            <td><?= h($user->firstname) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Lastname') ?></th>
-            <td><?= h($user->lastname) ?></td>
+            <th><?= __('Name') ?></th>
+            <td><?= h($user->name) ?></td>
         </tr>
         <tr>
             <th><?= __('Address') ?></th>
