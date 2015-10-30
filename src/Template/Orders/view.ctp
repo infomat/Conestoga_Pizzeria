@@ -3,10 +3,8 @@
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('Edit Order'), ['action' => 'edit', $order->order_id]) ?> </li>
         <li><?= $this->Form->postLink(__('Delete Order'), ['action' => 'delete', $order->order_id], ['confirm' => __('Are you sure you want to delete # {0}?', $order->order_id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Orders'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Order'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Orders'), ['controller' => 'Orders', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Order'), ['controller' => 'Orders', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('New Order'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
     </ul>
@@ -15,16 +13,25 @@
     <h3>Orders ID: <?= h($order->order_id) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th><?= __('User') ?></th>
+            <th><?= __('Name') ?></th>
             <td><?= $order->has('user') ? $this->Html->link($order->user->name, ['controller' => 'Users', 'action' => 'view', $order->user->user_id]) : '' ?></td>
         </tr>
+        <tr>
+            <th><?= __('Email') ?></th>
+            <td><?= $order->has('user') ? $order->user->email : '' ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Phone') ?></th>
+            <td><?= $order->has('user') ? $order->user->phonenumber : ''?></td>
+        </tr>
+
         <tr>
             <th><?= __('Size') ?></th>
             <td><?= h($order->size) ?></td>
         </tr>
         <tr>
             <th><?= __('Cruststyle') ?></th>
-            <td><?= h($order->cruststyle) ?></td>
+            <td><?= h($order->crustname) ?></td>
         </tr>
         <tr>
             <th><?= __('Quantity') ?></th>

@@ -13,6 +13,7 @@
                 <th><?= $this->Paginator->sort('role') ?></th>
                 <th><?= $this->Paginator->sort('email') ?></th>
                 <th><?= $this->Paginator->sort('name') ?></th>
+                <th><?= $this->Paginator->sort('phonenumber') ?></th>
                 <th><?= $this->Paginator->sort('address') ?></th>
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
@@ -24,6 +25,7 @@
                 <td><?= h($user->role) ?></td>
                 <td><?= h($user->email) ?></td>
                 <td><?= h($user->name) ?></td>
+                <td><?= h($user->phonenumber) ?></td>
                 <td><?= h($user->address) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('Order'),  ['controller' => 'Orders', 'action' => 'add', 

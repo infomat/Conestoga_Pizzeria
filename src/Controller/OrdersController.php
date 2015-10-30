@@ -71,7 +71,9 @@ class OrdersController extends AppController
     {
         $order = $this->Orders->newEntity();
         if ($this->request->is('post')) {
+            $this->request->data['user_id'] = $id;
             $order = $this->Orders->patchEntity($order, $this->request->data);
+        
             if ($this->Orders->save($order)) {
                 $this->Flash->success(__('The order has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -79,10 +81,10 @@ class OrdersController extends AppController
                 $this->Flash->error(__('The order could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Orders->Users->get($id);
+        $user = $this->Orders->Users->get($id);
         $doughsize = $this->Orders->Doughsize->find('list', ['limit' => 200]);
         $crustname = $this->Orders->Cruststyle->find('list', ['limit' => 200]);
-        $this->set(compact('order', 'users', 'doughsize', 'crustname'));
+        $this->set(compact('order', 'user', 'doughsize', 'crustname'));
     }
 
     /**
@@ -94,9 +96,7 @@ class OrdersController extends AppController
      */
     public function edit($id = null)
     {
-        $order = $this->Orders->get($id, [
-            'contain' => []
-        ]);
+        $order = $this->Orders->get($id,['contain' => ['Users']]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $order = $this->Orders->patchEntity($order, $this->request->data);
             if ($this->Orders->save($order)) {
@@ -106,10 +106,10 @@ class OrdersController extends AppController
                 $this->Flash->error(__('The order could not be saved. Please, try again.'));
             }
         }
-        $orders = $this->Orders->Orders->find('list', ['limit' => 200]);
-        $users = $this->Orders->Users->find('list', ['limit' => 200]);
-        $this->set(compact('order', 'orders', 'users'));
-        $this->set('_serialize', ['order']);
+        
+        $doughsize = $this->Orders->Doughsize->find('list', ['limit' => 200]);
+        $crustname = $this->Orders->Cruststyle->find('list', ['limit' => 200]);
+        $this->set(compact('order', 'doughsize', 'crustname'));
     }
 
     /**

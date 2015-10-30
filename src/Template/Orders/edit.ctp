@@ -8,8 +8,7 @@
             )
         ?></li>
         <li><?= $this->Html->link(__('List Orders'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Orders'), ['controller' => 'Orders', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Order'), ['controller' => 'Orders', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('New Order'), ['controller' => 'Users', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
     </ul>
@@ -19,14 +18,13 @@
     <fieldset>
         <legend><?= __('Edit Order') ?></legend>
         <?php
-            echo $this->Form->input('user_id', ['options' => $users]);
-            echo $this->Form->input('size');
-            echo $this->Form->input('cruststyle');
-            echo $this->Form->input('quantity');
+            echo $order->user->email;
+            echo $this->Form->input('size',['options' => $doughsize]);
+            echo $this->Form->input('crustname',['options' => $crustname]);
+            echo $this->Form->input('quantity', ['min'=>1, 'max'=>10]);
             echo $this->Form->input('subtotal');
             echo $this->Form->input('tax');
             echo $this->Form->input('total');
-            echo $this->Form->input('orderdate');
             echo $this->Form->input('iscompleted');
         ?>
     </fieldset>

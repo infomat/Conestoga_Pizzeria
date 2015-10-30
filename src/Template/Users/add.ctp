@@ -12,7 +12,7 @@
         <legend><?= __('Add User') ?></legend>
         <?php
             echo $this->Form->input('role', [
-                'options' => ['employee' => 'Admin', 'customer' => 'Customer']]);
+                'options' => ['employee' => 'Admin', 'customer' => 'Customer'], 'default' => 'customer']);
             echo $this->Form->input('email');
             echo $this->Form->input('password');
             echo $this->Form->input('name');

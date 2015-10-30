@@ -30,7 +30,17 @@ class OrdersTable extends Table
         $this->displayField('order_id');
         $this->primaryKey('order_id');
 
-        $this->addBehavior('Timestamp');
+        $this->addBehavior('Timestamp', [
+            'events' => [
+                'Model.beforeSave' => [
+                    'orderdate' => 'new',
+                    'modified' => 'always',
+                ],
+                'Orders.completed' => [
+                    'modified' => 'always'
+                ]
+            ]
+        ]);
 
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
@@ -80,10 +90,6 @@ class OrdersTable extends Table
         $validator
             ->add('total', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('total');
-
-        $validator
-            ->add('orderdate', 'valid', ['rule' => 'datetime'])
-            ->allowEmpty('orderdate');
 
         $validator
             ->add('iscompleted', 'valid', ['rule' => 'boolean'])
