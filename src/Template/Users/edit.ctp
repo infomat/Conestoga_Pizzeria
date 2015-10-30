@@ -17,7 +17,8 @@
     <fieldset>
         <legend><?= __('Edit User') ?></legend>
         <?php
-            echo $this->Form->input('role');
+            echo $this->Form->input('role',[
+                'options' => ['employee' => 'Admin', 'customer' => 'Customer']]);
             echo $this->Form->input('email');
             echo $this->Form->input('password');
             echo $this->Form->input('name');
@@ -28,6 +29,6 @@
             echo $this->Form->input('phonenumber');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Save')) ?>
     <?= $this->Form->end() ?>
 </div>

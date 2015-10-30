@@ -46,11 +46,8 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => ['Users']
-        ]);
-        $this->set('user', $user);
-        $this->set('_serialize', ['user']);
+        $user = $this->Users->get($id);
+        $this->set(compact('user'));
     }
 
     /**
@@ -62,17 +59,14 @@ class UsersController extends AppController
     {
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
+        $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('Your user has been saved.'));
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
+            $this->Flash->error(__('Unable to add your user.'));
         }
-        $users = $this->Users->Users->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'users'));
-        $this->set('_serialize', ['user']);
+        $this->set('user', $user);
     }
 
     /**
@@ -84,21 +78,16 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
+        $user = $this->Users->get($id);
+        if ($this->request->is(['post', 'put'])) {
+            $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('Your user has been updated.'));
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
+            $this->Flash->error(__('Unable to update your user.'));
         }
-        $users = $this->Users->Users->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'users'));
-        $this->set('_serialize', ['user']);
+        $this->set('user', $user);
     }
 
     /**
@@ -113,10 +102,8 @@ class UsersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
-        } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+            $this->Flash->success(__('The user with id: {0} has been deleted.', h($id)));
+            return $this->redirect(['action' => 'index']);
         }
-        return $this->redirect(['action' => 'index']);
     }
 }

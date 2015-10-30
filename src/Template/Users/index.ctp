@@ -26,9 +26,12 @@
                 <td><?= h($user->name) ?></td>
                 <td><?= h($user->address) ?></td>
                 <td class="actions">
+                    <?= $this->Html->link(__('Order'),  ['controller' => 'Orders', 'action' => 'add', 
+                                                         $user->user_id]) ?> 
                     <?= $this->Html->link(__('View'), ['action' => 'view', $user->user_id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->user_id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->user_id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->user_id)]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->user_id], 
+                                              ['confirm' => __('Are you sure you want to delete # {0}?', $user->user_id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

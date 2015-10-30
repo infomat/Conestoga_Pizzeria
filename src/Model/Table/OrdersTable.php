@@ -36,6 +36,16 @@ class OrdersTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
+        
+        $this->hasMany('Doughsize', [
+            'foreignKey' => 'size',
+            'joinType' => 'INNER'
+        ]);
+        
+        $this->hasMany('Cruststyle', [
+            'foreignKey' => 'name',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -51,8 +61,8 @@ class OrdersTable extends Table
             ->notEmpty('size');
 
         $validator
-            ->requirePresence('cruststyle', 'create')
-            ->notEmpty('cruststyle');
+            ->requirePresence('crustname', 'create')
+            ->notEmpty('crustname');
 
         $validator
             ->add('quantity', 'valid', ['rule' => 'numeric'])
@@ -93,6 +103,8 @@ class OrdersTable extends Table
     {
         $rules->add($rules->existsIn(['order_id'], 'Orders'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['size'], 'Doughsize'));
+        $rules->add($rules->existsIn(['crustname'], 'Cruststyle'));
         return $rules;
     }
 }

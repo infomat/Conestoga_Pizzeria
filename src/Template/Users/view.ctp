@@ -10,11 +10,11 @@
     </ul>
 </nav>
 <div class="users view large-9 medium-8 columns content">
-    <h3><?= h($user->user_id) ?></h3>
+    <h3><?= h($user->name) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th><?= __('User') ?></th>
-            <td><?= $user->has('user') ? $this->Html->link($user->user->user_id, ['controller' => 'Users', 'action' => 'view', $user->user->user_id]) : '' ?></td>
+            <th><?= __('UserID') ?></th>
+            <td><?=  h($user->user_id) ?></td>
         </tr>
         <tr>
             <th><?= __('Role') ?></th>

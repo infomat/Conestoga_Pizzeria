@@ -12,7 +12,7 @@
         <thead>
             <tr>
                 <th><?= $this->Paginator->sort('order_id') ?></th>
-                <th><?= $this->Paginator->sort('user_id') ?></th>
+                <th><?= $this->Paginator->sort('email') ?></th>
                 <th><?= $this->Paginator->sort('size') ?></th>
                 <th><?= $this->Paginator->sort('cruststyle') ?></th>
                 <th><?= $this->Paginator->sort('quantity') ?></th>
@@ -26,9 +26,9 @@
             <?php foreach ($orders as $order): ?>
             <tr>
                 <td><?= $this->Number->format($order->order_id) ?></td>
-                <td><?= $order->has('user') ? $this->Html->link($order->user->name, ['controller' => 'Users', 'action' => 'view', $order->user->user_id]) : '' ?></td>
+                <td><?= $order->has('user') ? $this->Html->link($order->user->email, ['controller' => 'Users', 'action' => 'view', $order->user->user_id]) : 'Anonymous' ?></td>
                 <td><?= h($order->size) ?></td>
-                <td><?= h($order->cruststyle) ?></td>
+                <td><?= h($order->crustname) ?></td>
                 <td><?= $this->Number->format($order->quantity) ?></td>
                 <td><?= $this->Time->format($order->orderdate) ?></td>
                 <td><?= $this->Time->format($order->modified) ?></td>

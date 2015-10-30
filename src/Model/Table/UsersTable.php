@@ -41,7 +41,11 @@ class UsersTable extends Table
     {
         $validator
             ->requirePresence('role', 'create')
-            ->notEmpty('role');
+            ->notEmpty('role')
+            ->add('role', 'inList', [
+                'rule' => ['inList', ['employee', 'customer']],
+                'message' => 'Please enter a valid role'
+            ]);
 
         $validator
             ->add('email', 'valid', ['rule' => 'email'])

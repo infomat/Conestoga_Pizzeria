@@ -11,14 +11,21 @@ use App\Controller\AppController;
 class OrdersController extends AppController
 {
     public $paginate = [
+        'Orders' => [],
+        'Users' => [],
+        'Doughsize' => [],
+        'Cruststyle' => [],
         'sortWhitelist' => [
-            'order_id', 'orderdate', 'modified', 'iscompleted'
+            'order_id', 'Users.name', ' orderdate', 'modified', 'iscompleted'
         ],
-        'limit' => 20,
+        'limit' => 5,
         'order' => [
-            'Orders.order_id' => 'asc'
+            'Orders.iscompleted' => 'desc',
+            'Orders.order_id' => 'asc',
+            'Orders.modified' => 'asc'
         ]
     ];
+    
     
     /* Initialize */
     public function initialize()
@@ -36,7 +43,7 @@ class OrdersController extends AppController
     public function index()
     {
         $orders = $this->Orders->find('all')->contain(['Users']);
-        $this->set('orders', $this->paginate());
+        $this->set('orders', $this->paginate($orders));
         $this->set(compact('orders'));
     }
 
@@ -49,19 +56,18 @@ class OrdersController extends AppController
      */
     public function view($id = null)
     {
-        $order = $this->Orders->get($id, [
-            'contain' => ['Orders', 'Users']
-        ]);
-        $this->set('order', $order);
-        $this->set('_serialize', ['order']);
+        $order = $this->Orders->get($id,['contain' => ['Users']]);
+        $this->set(compact('order'));
     }
 
     /**
      * Add method
-     *
+     * Adding order should be based on existing user
+     * So, new order will be routed to user list and there, new order will be placed
+     * Uesr email will be shown at order list
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($id = null)
     {
         $order = $this->Orders->newEntity();
         if ($this->request->is('post')) {
@@ -73,10 +79,10 @@ class OrdersController extends AppController
                 $this->Flash->error(__('The order could not be saved. Please, try again.'));
             }
         }
-        $orders = $this->Orders->Orders->find('list', ['limit' => 200]);
-        $users = $this->Orders->Users->find('list', ['limit' => 200]);
-        $this->set(compact('order', 'orders', 'users'));
-        $this->set('_serialize', ['order']);
+        $users = $this->Orders->Users->get($id);
+        $doughsize = $this->Orders->Doughsize->find('list', ['limit' => 200]);
+        $crustname = $this->Orders->Cruststyle->find('list', ['limit' => 200]);
+        $this->set(compact('order', 'users', 'doughsize', 'crustname'));
     }
 
     /**

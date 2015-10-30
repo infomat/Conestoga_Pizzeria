@@ -13,15 +13,18 @@
     <fieldset>
         <legend><?= __('Add Order') ?></legend>
         <?php
-            echo $this->Form->input('user_id', ['options' => $users]);
-            echo $this->Form->input('size');
-            echo $this->Form->input('cruststyle');
-            echo $this->Form->input('quantity');
+        
+          
+            echo $users->email;
+            $this->Form->input('id') = $users_id;
+           // echo $this->Form->input('email', $users);
+            echo $this->Form->input('size', ['options' => $doughsize]);
+            echo $this->Form->input('cruststyle', ['options' => $crustname, 'default' => 'Pan']);
+            echo $this->Form->input('quantity', ['min'=>1, 'max'=>10]);
             echo $this->Form->input('subtotal');
             echo $this->Form->input('tax');
             echo $this->Form->input('total');
-            echo $this->Form->input('orderdate');
-            echo $this->Form->input('iscompleted');
+
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

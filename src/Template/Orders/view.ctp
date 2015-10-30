@@ -12,15 +12,11 @@
     </ul>
 </nav>
 <div class="orders view large-9 medium-8 columns content">
-    <h3><?= h($order->order_id) ?></h3>
+    <h3>Orders ID: <?= h($order->order_id) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th><?= __('Order') ?></th>
-            <td><?= $order->has('order') ? $this->Html->link($order->order->order_id, ['controller' => 'Orders', 'action' => 'view', $order->order->order_id]) : '' ?></td>
-        </tr>
-        <tr>
             <th><?= __('User') ?></th>
-            <td><?= $order->has('user') ? $this->Html->link($order->user->user_id, ['controller' => 'Users', 'action' => 'view', $order->user->user_id]) : '' ?></td>
+            <td><?= $order->has('user') ? $this->Html->link($order->user->name, ['controller' => 'Users', 'action' => 'view', $order->user->user_id]) : '' ?></td>
         </tr>
         <tr>
             <th><?= __('Size') ?></th>
