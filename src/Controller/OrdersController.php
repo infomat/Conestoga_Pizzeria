@@ -93,9 +93,12 @@ class OrdersController extends AppController
         if ($this->request->is('post')) {
             $this->request->data['user_id'] = $id;
             $order->email = $this->Auth->user('email');
-            $order->toppings = implode(',',$this->request->data['veggie']);
-            $order->toppings = $order->toppings.','.implode(',',$this->request->data['meat']);
-            $order->toppings = $order->toppings.','.implode(',',$this->request->data['cheese']);
+            if ($this->request->data['veggie']!=null)
+                $order->toppings = implode(',',$this->request->data['veggie']);
+            if ($this->request->data['meat']!=null)
+                $order->toppings = $order->toppings.','.implode(',',$this->request->data['meat']);
+            if ($this->request->data['cheese']!=null)
+                $order->toppings = $order->toppings.','.implode(',',$this->request->data['cheese']);
 
             $order = $this->Orders->patchEntity($order, $this->request->data);
             if ($this->Orders->save($order)) {
@@ -139,9 +142,12 @@ class OrdersController extends AppController
     {
         $order = $this->Orders->get($id,['contain' => ['Users']]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $order->toppings = implode(',',$this->request->data['veggie']);
-            $order->toppings = $order->toppings.','.implode(',',$this->request->data['meat']);
-            $order->toppings = $order->toppings.','.implode(',',$this->request->data['cheese']);
+            if ($this->request->data['veggie']!=null)
+                $order->toppings = implode(',',$this->request->data['veggie']);
+            if ($this->request->data['meat']!=null)
+                $order->toppings = $order->toppings.','.implode(',',$this->request->data['meat']);
+            if ($this->request->data['cheese']!=null)
+                $order->toppings = $order->toppings.','.implode(',',$this->request->data['cheese']);
             $order = $this->Orders->patchEntity($order, $this->request->data);
             if ($this->Orders->save($order)) {
                 $this->Flash->success(__('The order has been saved.'));
@@ -193,6 +199,8 @@ class OrdersController extends AppController
     
     public function isAuthorized($user)
     {
+        if ($user['role'] == 'employee') 
+            return true;
         // All registered users can add orders
         if ($this->request->action === 'add') {
             return true;
