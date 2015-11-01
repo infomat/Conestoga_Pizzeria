@@ -41,10 +41,18 @@ $cakeDescription = 'Conestoga Pizzeria';
             </li>
         </ul>
         <section class="top-bar-section">
-            <ul class="right">
-                <li><a target="_blank" href="http://book.cakephp.org/3.0/">Documentation</a></li>
-                <li><a target="_blank" href="http://api.cakephp.org/3.0/">API</a></li>
-            </ul>
+            <div id="status" class="right">  
+                <?php
+                /*if ($access->isLoggedin()) {
+                    echo "Welcome" + $authUser['User']['username'];
+                    echo $this->Html->link('Sign Out', array('controller' => 'users', 'action' => 'logout'));
+                } else {
+                    echo $this->Html->link('Sign In', array('controller' => 'users', 'action' => 'login'));
+                    echo"</br>";
+                    echo $this->Html->link('Sign Up', array('controller' => 'users', 'action' => 'register'));
+                }*/
+                ?>
+            </div>
         </section>
     </nav>
     <?= $this->Flash->render() ?>

@@ -56,6 +56,7 @@ class OrdersTable extends Table
             'foreignKey' => 'name',
             'joinType' => 'INNER'
         ]);
+        
     }
 
     /**
@@ -112,5 +113,10 @@ class OrdersTable extends Table
         $rules->add($rules->existsIn(['size'], 'Doughsize'));
         $rules->add($rules->existsIn(['crustname'], 'Cruststyle'));
         return $rules;
+    }
+    
+    public function isOwnedBy($orderId, $userId)
+    {
+        return $this->exists(['order_id' => $orderId, 'user_id' => $userId]);
     }
 }

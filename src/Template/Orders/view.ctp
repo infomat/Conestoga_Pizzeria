@@ -34,6 +34,10 @@
             <td><?= h($order->crustname) ?></td>
         </tr>
         <tr>
+            <th><?= __('Toppings') ?></th>
+            <td><?=  $topping_name_ar==null ? 'None' : h(implode($topping_name_ar,',')) ?></td>
+        </tr>
+        <tr>
             <th><?= __('Quantity') ?></th>
             <td><?= $this->Number->format($order->quantity) ?></td>
         </tr>

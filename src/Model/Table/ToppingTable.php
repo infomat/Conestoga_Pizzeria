@@ -26,7 +26,7 @@ class ToppingTable extends Table
 
         $this->table('topping');
         $this->displayField('name');
-        $this->primaryKey('name');
+        $this->primaryKey('topping_id');
 
     }
 

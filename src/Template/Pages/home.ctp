@@ -37,8 +37,8 @@ $pizzeriaDescription = 'Conestoga Pizzeria';
         <li><a href="#">Order</a></li>
     </ul>
     <ul class="pull-right">
-        <li><a href="#">Sign Up</a></li>
-        <li><a href="#">Log In</a></li>
+        <li><a href="/users/add/">Sign Up</a></li>
+        <li><a href="/users/login/">Log In</a></li>
     </ul>
 
     </nav>

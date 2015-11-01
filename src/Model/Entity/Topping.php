@@ -23,6 +23,5 @@ class Topping extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'name' => false,
     ];
 }
