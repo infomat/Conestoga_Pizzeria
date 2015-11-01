@@ -57,13 +57,13 @@ legend {
   margin-top: 2rem;
   border: 0;
   width: 100%;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 .related table {
   border: 0;
   width: 100%;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 .index table thead {

@@ -1,4 +1,4 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
+<nav class="large-2 medium-3 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Form->postLink(
@@ -13,10 +13,11 @@
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
     </ul>
 </nav>
-<div class="orders form large-9 medium-8 columns content">
+<div class="orders form large-10 medium-9 columns content">
     <?= $this->Form->create($order) ?>
     <fieldset>
         <legend><?= __('Edit Order') ?></legend>
+        <h3>Orders ID: <?= h($order->order_id) ?></h3>
         <?php
             $veggie_names = array();
             foreach($veggie as $veggie_item):
@@ -35,7 +36,7 @@
             $selected=array();
             $selected = explode(',',$order->toppings);
    
-            echo $order->user->email;
+            echo '<h5>Emai ID: '.$order->user->email.'</h5>';
             echo $this->Form->input('size',['options' => $doughsize]);
             echo $this->Form->input('crustname',['options' => $crustname]);
             

@@ -67,9 +67,9 @@ class OrdersController extends AppController
     {
         $order = $this->Orders->get($id,['contain' => ['Users']]);
         $this->loadModel('Topping');
+        $topping_name_ar=array();
         if ($order->toppings != null){
             $topping_ar=array();
-            $topping_name_ar=array();
             $topping_ar = explode(',',$order->toppings);
            
             foreach ($topping_ar as $item):
@@ -176,6 +176,22 @@ class OrdersController extends AppController
                     ->order(['topping_id' => 'ASC']);
         
         $this->set(compact('order', 'doughsize', 'crustname','crustname','cheese','meat','veggie'));
+    }
+    
+    public function complete($id = null)
+    {
+        $order = $this->Orders->get($id,['contain' => ['Users']]);
+        $this->request->data['iscompleted'] = 1;
+        if ($this->request->is(['patch', 'post', 'put'])) {
+
+            $order = $this->Orders->patchEntity($order, $this->request->data);
+            if ($this->Orders->save($order)) {
+                $this->Flash->success(__('The order has been completed.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('The order could not be complted. Please, try again.'));
+            }
+        }
     }
 
     /**

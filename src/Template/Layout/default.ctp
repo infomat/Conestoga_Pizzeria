@@ -34,8 +34,11 @@ $cakeDescription = 'Conestoga Pizzeria';
     <?= $this->fetch('script') ?>
 </head>
 <body>
+    <header>
+        <h1>Conestoga Pizzeria</h1>
+    </header>
     <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
+        <ul class="title-area large-2 medium-3 columns">
             <li class="name">
                 <h1><a href=""><?= $this->fetch('title') ?></a></h1>
             </li>

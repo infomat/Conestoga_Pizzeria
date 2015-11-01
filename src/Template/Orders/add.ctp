@@ -1,4 +1,4 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
+<nav class="large-2 medium-3 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('List Orders'), ['action' => 'index']) ?></li>
@@ -7,12 +7,11 @@
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
     </ul>
 </nav>
-<div class="orders form large-9 medium-8 columns content">
+<div class="orders form large-10 medium-9 columns content">
     <?= $this->Form->create($order) ?>
     <fieldset>
         <legend><?= __('Add Order') ?></legend>
         <?php
-
             $veggie_names = array();
             foreach($veggie as $veggie_item):
                 $veggie_names[$veggie_item->topping_id] = $veggie_item->name;
@@ -28,8 +27,7 @@
             foreach($cheese as $cheese_item):
                 $cheese_names[$cheese_item->topping_id] = $cheese_item->name;
             endforeach;
-            
-            echo $user->email;
+            echo '<h5>Emai ID: '.$user->email.'</h5>';
             echo $this->Form->input('size', ['options' => $doughsize]);
             echo $this->Form->input('crustname', ['options' => $crustname, 'default' => 'Pan']);
             echo "<p>Toppings:</p>";
