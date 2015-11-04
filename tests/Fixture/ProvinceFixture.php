@@ -25,7 +25,7 @@ class ProvinceFixture extends TestFixture
     // @codingStandardsIgnoreStart
     public $fields = [
         'name' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
-        'tax_percent' => ['type' => 'float', 'length' => null, 'precision' => null, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => ''],
+        'taxrate' => ['type' => 'float', 'length' => null, 'precision' => null, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => ''],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['name'], 'length' => []],
         ],
@@ -43,8 +43,8 @@ class ProvinceFixture extends TestFixture
      */
     public $records = [
         [
-            'name' => 'b502b43b-21de-4c85-ae36-df4542bd0a38',
-            'tax_percent' => 1
+            'name' => '09166618-51da-492d-bdb7-ac6c1b6d58d4',
+            'taxrate' => 1
         ],
     ];
 }

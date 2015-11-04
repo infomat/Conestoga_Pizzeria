@@ -43,6 +43,11 @@ $cakeDescription = 'Conestoga Pizzeria';
         <?=$this->Html->link(__($cakeDescription), ['controller' => 'orders', 'action' => 'index']);?>
         </h1>
     </header>
+    <?php
+        if(count($_COOKIE) <= 0) {
+           echo '<p class="error">Cookie should be enabled to use this site </p>';
+        } 
+    ?>
     <nav class="top-bar expanded" data-topbar role="navigation">
         <ul class="title-area large-2 medium-3 columns">
             <li class="name">

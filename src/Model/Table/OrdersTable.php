@@ -82,15 +82,15 @@ class OrdersTable extends Table
 
         $validator
             ->add('subtotal', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('subtotal');
+            ->notEmpty('subtotal');
 
         $validator
             ->add('tax', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('tax');
+            ->notEmpty('tax');
 
         $validator
             ->add('total', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('total');
+            ->notEmpty('total');
 
         $validator
             ->add('iscompleted', 'valid', ['rule' => 'boolean'])

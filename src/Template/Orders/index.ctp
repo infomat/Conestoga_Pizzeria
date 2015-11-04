@@ -29,7 +29,7 @@
                 <td><?= $order->has('user') ? $this->Html->link($order->user->email, ['controller' => 'Users', 'action' => 'view', $order->user->user_id]) : 'Anonymous' ?></td>
                 <td><?= h($order->size) ?></td>
                 <td><?= h($order->crustname) ?></td>
-                <td><?= h(substr_count($order->toppings, ",")) ?></td>
+                <td><?= h($order->toppings)==0 ? 0 : (substr_count($order->toppings, ",")+1) ?></td>
                 <td><?= $this->Number->format($order->quantity) ?></td>
                 <td><?= $this->Time->format($order->orderdate) ?></td>
                 <td><?= $this->Time->format($order->modified) ?></td>

@@ -7,7 +7,7 @@
     }
 ?>
 <div class="orders form large-10 medium-9 columns content">
-    <?= $this->Form->create($order) ?>
+    <?= $this->Form->create($order,['id' => 'orderform']) ?>
     <fieldset>
         <legend><?= __('Edit Order') ?></legend>
         <h3>Orders ID: <?= h($order->order_id) ?></h3>
@@ -35,8 +35,10 @@
             echo $this->Form->input('tax',['readonly' => 'readonly']);
             echo $this->Form->input('total',['readonly' => 'readonly']);
             echo $this->Form->input('iscompleted');
+    
+            echo '<p id="tax_rate">Tax Rate is '.($taxrate*100).'%  <p>';
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Submit'), ['id' => 'submit']) ?>
     <?= $this->Form->end() ?>
 </div>

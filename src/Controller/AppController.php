@@ -42,6 +42,7 @@ class AppController extends Controller
         parent::initialize();
 
         $this->loadComponent('Flash');
+        $this->loadComponent('Cookie', ['expiry' => '1 day']);
         $this->loadComponent('Auth', [
             'authorize' => ['Controller'], // To check whether user is authorized to do something
             'authenticate' => [

@@ -42,8 +42,8 @@ class ProvinceTable extends Table
             ->allowEmpty('name', 'create');
 
         $validator
-            ->add('tax_percent', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('tax_percent');
+            ->add('taxrate', 'valid', ['rule' => 'numeric'])
+            ->allowEmpty('taxrate');
 
         return $validator;
     }

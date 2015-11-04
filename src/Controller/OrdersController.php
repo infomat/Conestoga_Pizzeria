@@ -39,6 +39,8 @@ class OrdersController extends AppController
         // Allow users to register and logout.
         // You should not add the "login" action to allow list. Doing so would
         // cause problems with normal functioning of AuthComponent.
+        $this->Cookie->configKey('taxrate', 'path', '/');
+        $this->Cookie->configKey('taxrate', ['encryption'=>false, 'httpOnly' => false]);
     }
     
      /**
@@ -50,10 +52,14 @@ class OrdersController extends AppController
     public function index()
     {   
         if ($this->request->session()->read('Auth.User.role')=='employee') {
-            $orders = $this->Orders->find('all')->contain(['Users']);
+            $orders = $this->Orders->find('all')
+                            ->contain(['Users'])
+                            ->order(['iscompleted' => 'ASC','orderdate' => 'DESC']);
         } else {
             $orders = $this->Orders->find('all')
+                ->order(['topping_id' => 'ASC'])
                 ->contain(['Users'])
+                ->order(['iscompleted' => 'ASC','orderdate' => 'DESC'])
                 ->where(['Orders.user_id' => $this->request->session()->read('Auth.User.user_id')]);
         } 
         $this->set('orders', $this->paginate($orders));
@@ -146,8 +152,16 @@ class OrdersController extends AppController
                     ->order(['topping_id' => 'ASC'])
                     ->toArray();
         
-        $this->set(compact('order', 'user', 'doughsize', 'crustname','cheese','meat','veggie'));
-
+        $this->loadModel('Province');
+        $taxrate = $this->Province->find()
+                    ->select(['taxrate'])
+                    ->where(['name' => $user->province])
+                    ->first()
+                    ->toArray();
+        $taxrate = implode($taxrate);
+        $this->Cookie->write('taxrate', $taxrate);
+        
+        $this->set(compact('order', 'user', 'doughsize', 'crustname', 'cheese', 'meat', 'veggie', 'taxrate'));
     }
 
     /**
@@ -160,6 +174,7 @@ class OrdersController extends AppController
     public function edit($id = null)
     {
         $order = $this->Orders->get($id,['contain' => ['Users']]);
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
             if ($this->request->data['veggie']!=null)
                 $order->toppings = implode(',',$this->request->data['veggie']);
@@ -175,6 +190,8 @@ class OrdersController extends AppController
                 $this->Flash->error(__('The order could not be saved. Please, try again.'));
             }
         }
+        $user = $this->Orders->Users->get($order->user_id);
+        
         $this->loadModel('Topping');
         $doughsize = $this->Orders->Doughsize->find('list', ['keyField' => 'size',
                             'valueField' => 'price'],['limit' => 20])->toArray();
@@ -198,8 +215,17 @@ class OrdersController extends AppController
                     ->where(['category' => "VEGGIE"])
                     ->order(['topping_id' => 'ASC'])
                     ->toArray();
+
+        $this->loadModel('Province');
+        $taxrate = $this->Province->find()
+                    ->select(['taxrate'])
+                    ->where(['name' => $user->province])
+                    ->first()
+                    ->toArray();
+        $taxrate = implode($taxrate);
+        $this->Cookie->write('taxrate', $taxrate);
         
-        $this->set(compact('order', 'doughsize', 'crustname','crustname','cheese','meat','veggie'));
+        $this->set(compact('order', 'user', 'doughsize', 'crustname', 'cheese', 'meat', 'veggie', 'taxrate'));
     }
     /**
      * Complete method

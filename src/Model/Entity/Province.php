@@ -7,7 +7,7 @@ use Cake\ORM\Entity;
  * Province Entity.
  *
  * @property string $name
- * @property float $tax_percent
+ * @property float $taxrate
  */
 class Province extends Entity
 {

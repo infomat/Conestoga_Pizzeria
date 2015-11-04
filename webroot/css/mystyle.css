@@ -11,3 +11,12 @@
 #title a {
    color:#003D4C; 
 }
+
+.error {
+    color : red;
+}
+
+#tax_rate{
+    font-size: 70%;
+    color:darkred;
+}
