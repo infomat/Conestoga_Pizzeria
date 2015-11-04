@@ -1,0 +1,84 @@
+article, aside, figure, footer, header, nav, section {
+	display: block;
+}
+
+#status {
+	color:#222233;
+}
+
+
+#maintitle{
+	font-family: 'Nunito', sans-serif;
+	background-color:rgba(152, 161, 44, 0.7);
+	border-radius: 15px;
+	padding: 1.5em;
+}
+
+.well {
+	background-color: #222233
+}
+
+#sec_contact,#sec_orderform {
+	background-color:rgba(235, 228, 196, 0.3);
+	border-radius: 15px;
+}
+
+#province{
+	margin:0 auto;
+}
+body {
+	background-image: url("../img/pizza.jpg");
+	background-size: contain;
+    background-repeat: repeat;
+	display: compact;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #222233;
+	background-color: #444444;
+	width: 80%;
+	margin: 0 auto;
+}
+label {
+	float: left;
+	width: 11em;
+	text-align: left;
+}
+
+footer {
+	clear:both;
+	font-size:70%;
+	position:fixed;
+	bottom:0;
+}
+
+#fg_prov {
+	margin-bottom:20px;
+}
+
+#ordersummary {
+	width: 60%;
+	margin: 0 auto;
+	padding: 0 2em 1em;
+	border: 3px solid #D1A674;
+	background-color:rgba(235, 228, 196, 0.3);
+	border-radius: 15px;
+}
+section {
+	padding: 0 2em 1em;
+}
+
+.well {
+	margin: 2em auto;
+	padding: 0 2em 1em;
+	color:#EBE4C4;
+}
+
+#error {
+	color: red;
+	float: right;
+}
+#order,#goback{
+	margin: 2em 2em;
+}
+.toppingtitle{
+	margin: 1.5em auto 0 auto;
+}

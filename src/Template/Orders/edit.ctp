@@ -1,18 +1,11 @@
-<nav class="large-2 medium-3 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $order->order_id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $order->order_id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Orders'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Order'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
+<?php
+    if ($this->request->session()->read('Auth.User.role') == 'employee'){
+        echo $this->element('sb_order_emp_order_id', [
+                                        "emp_order_id" => h($order->order_id)]);
+    } else {
+        echo $this->element('sb_cust');
+    }
+?>
 <div class="orders form large-10 medium-9 columns content">
     <?= $this->Form->create($order) ?>
     <fieldset>

@@ -1,15 +1,14 @@
-if ($this->request->session()->read('Auth.User.role') == 'employee'){
-    echo $this->element('sb_user_emp_no_id');
-} else {
-    echo $this->element('sb_cust');
-}
+<nav class="large-2 medium-3 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link(__('Log in'), ['controller' => 'Users', 'action' => 'login']) ?></li>
+    </ul>
+</nav>
 <div class="users form large-10 medium-9 columns content">
     <?= $this->Form->create($user) ?>
     <fieldset>
-        <legend><?= __('Add User') ?></legend>
+        <legend><?= __('Sign Up') ?></legend>
         <?php
-            echo $this->Form->input('role', [
-                'options' => ['employee' => 'Admin', 'customer' => 'Customer'], 'default' => 'customer']);
             echo $this->Form->input('email');
             echo $this->Form->input('password');
             echo $this->Form->input('name');

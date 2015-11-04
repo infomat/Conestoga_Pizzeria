@@ -30,14 +30,14 @@ class UsersController extends AppController
         // Allow users to register and logout.
         // You should not add the "login" action to allow list. Doing so would
         // cause problems with normal functioning of AuthComponent.
-        $this->Auth->allow(['add', 'logout']);
+        $this->Auth->allow(['signup','logout']);
     }
     
     public function login()
     {
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
-            
+
             if ($user) {
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
@@ -57,9 +57,13 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $users = $this->Users->find('all');
-        $this->set('users', $this->paginate());
-        $this->set(compact('users'));
+        if ($this->request->session()->read('Auth.User.role')=='employee') {
+            $users = $this->Users->find('all');
+            $this->set('users', $this->paginate());
+            $this->set(compact('users'));
+        } else {
+            $this->Flash->error(__('Unauthorized Access.'));
+        }
     }
 
     /**
@@ -75,8 +79,28 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
+   
     /**
-     * Add method
+     * Signup method (For Customer)
+     *
+     * @return void Redirects on successful add, renders view otherwise.
+     */
+    public function signup()
+    {
+        $user = $this->Users->newEntity();
+        if ($this->request->is('post')) {
+        $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('Your information has been saved.'));
+                return $this->redirect(['controller' => 'orders','action' => 'add',$this->Users->user_id]);
+            }
+            $this->Flash->error(__('Unable to add your information.'));
+        }
+        $this->set('user', $user);
+    }
+    
+    /**
+     * Add method (For Employee)
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
@@ -130,5 +154,20 @@ class UsersController extends AppController
             $this->Flash->success(__('The user with id: {0} has been deleted.', h($id)));
             return $this->redirect(['action' => 'index']);
         }
+    }
+    
+    public function isAuthorized($user)
+    {
+        if ($user['role'] == 'employee') 
+            return true;
+        // All registered users can add orders
+        // The owner of an order can edit and delete it
+        if (in_array($this->request->action, ['edit','view'])) {
+            $user_id = (int)$this->request->params['pass'][0];
+            if ($user_id == $user['user_id']) {
+                return true;
+            }
+        }
+        return parent::isAuthorized($user);
     }
 }

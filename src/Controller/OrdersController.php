@@ -39,10 +39,9 @@ class OrdersController extends AppController
         // Allow users to register and logout.
         // You should not add the "login" action to allow list. Doing so would
         // cause problems with normal functioning of AuthComponent.
-        $this->Auth->allow(['login']);
     }
     
-    /**
+     /**
      * Index method
      *
      * @return void
@@ -50,8 +49,13 @@ class OrdersController extends AppController
     
     public function index()
     {   
-        //pr($this->Auth->user());
-        $orders = $this->Orders->find('all')->contain(['Users']);
+        if ($this->request->session()->read('Auth.User.role')=='employee') {
+            $orders = $this->Orders->find('all')->contain(['Users']);
+        } else {
+            $orders = $this->Orders->find('all')
+                ->contain(['Users'])
+                ->where(['Orders.user_id' => $this->request->session()->read('Auth.User.user_id')]);
+        } 
         $this->set('orders', $this->paginate($orders));
         $this->set(compact('orders'));
     }
@@ -108,6 +112,16 @@ class OrdersController extends AppController
                 $this->Flash->error(__('The order could not be saved. Please, try again.'));
             }
         }
+        
+        //this is for processing customer can add their own, employee can add any user's
+        if ($id == null) {
+            if(is_null($this->request->session()->read('Auth.User.user_id'))){
+                $this->Flash->error(__('Unauthorized Access.'));
+            } else {
+                $id = $this->request->session()->read('Auth.User.user_id');
+            }
+        }
+
         $user = $this->Orders->Users->get($id);
         $doughsize = $this->Orders->Doughsize->find('list', ['limit' => 200]);
         $crustname = $this->Orders->Cruststyle->find('list', ['limit' => 200]);
@@ -177,7 +191,13 @@ class OrdersController extends AppController
         
         $this->set(compact('order', 'doughsize', 'crustname','crustname','cheese','meat','veggie'));
     }
-    
+    /**
+     * Complete method
+     * To change order status to complete by updating iscomplete as true
+     * @param string|null $id Order id.
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
     public function complete($id = null)
     {
         $order = $this->Orders->get($id,['contain' => ['Users']]);
@@ -212,21 +232,23 @@ class OrdersController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
-    
+     /**
+     * isAuthorized method
+     * Authorization depedning on role
+     * @param string|null $id Order id.
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
     public function isAuthorized($user)
     {
-        if ($user['role'] == 'employee') 
+        if ($user['role'] == 'employee')
             return true;
-        // All registered users can add orders
-        if ($this->request->action === 'add') {
+        if (in_array($this->request->action, ['index', 'add']))
             return true;
-        }
+        
         // The owner of an order can edit and delete it
-        if (in_array($this->request->action, ['edit', 'delete'])) {
+        if (in_array($this->request->action, ['edit', 'delete', 'view'])) {
             $order_id = (int)$this->request->params['pass'][0];
-            
-            //TODO
-            //ERRRORUndefined variable: order_id [APP/Controller\OrdersController.php, line 172]
             if ($this->Orders->isOwnedBy($order_id, $user['user_id'])) {
                 return true;
             }

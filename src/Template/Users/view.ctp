@@ -1,22 +1,18 @@
-<nav class="large-2 medium-3 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit User'), ['action' => 'edit', $user->user_id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->user_id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->user_id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?> </li>
-    </ul>
-</nav>
+<?php
+if ($this->request->session()->read('Auth.User.role') == 'employee'){
+    echo $this->element('sb_user_emp_user_id', [
+                                        "emp_user_id" => h($user->user_id)]);
+} else {
+    echo $this->element('sb_cust');
+}
+?>
+
 <div class="users view large-10 medium-9 columns content">
     <h3><?= h($user->name) ?></h3>
     <table class="vertical-table">
         <tr>
             <th><?= __('UserID') ?></th>
             <td><?=  h($user->user_id) ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Role') ?></th>
-            <td><?= h($user->role) ?></td>
         </tr>
         <tr>
             <th><?= __('Email') ?></th>

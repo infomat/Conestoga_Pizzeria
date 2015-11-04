@@ -1,9 +1,10 @@
-<nav class="large-2 medium-3 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
-    </ul>
-</nav>
+<?php
+if ($this->request->session()->read('Auth.User.role') == 'employee'){
+    echo $this->element('sb_user_emp_no_id');
+} else {
+    echo $this->element('sb_cust');
+}
+?>
 <div class="users index large-10 medium-9 columns content">
     <h3><?= __('Users') ?></h3>
     <table cellpadding="0" cellspacing="0">

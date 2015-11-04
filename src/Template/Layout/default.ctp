@@ -28,14 +28,17 @@ $cakeDescription = 'Conestoga Pizzeria';
 
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('cake.css') ?>
-
+    <?= $this->Html->css('mystyle.css') ?>
+    
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
 <body>
     <header>
-        <h1>Conestoga Pizzeria</h1>
+        <h1 id="title">
+        <?=$this->Html->link(__($cakeDescription), ['controller' => 'orders', 'action' => 'index']);?>
+        </h1>
     </header>
     <nav class="top-bar expanded" data-topbar role="navigation">
         <ul class="title-area large-2 medium-3 columns">
@@ -46,14 +49,14 @@ $cakeDescription = 'Conestoga Pizzeria';
         <section class="top-bar-section">
             <div id="status" class="right">  
                 <?php
-                /*if ($access->isLoggedin()) {
-                    echo "Welcome" + $authUser['User']['username'];
-                    echo $this->Html->link('Sign Out', array('controller' => 'users', 'action' => 'logout'));
+                if (is_null($this->request->session()->read('Auth.User.email'))) {
+                    $this->Html->link(__('Signup'), ['controller' => 'Users', 'action' => 'singup']);
+                    $this->Html->link(__('Login'), ['controller' => 'Users', 'action' => 'login']);
+
                 } else {
-                    echo $this->Html->link('Sign In', array('controller' => 'users', 'action' => 'login'));
-                    echo"</br>";
-                    echo $this->Html->link('Sign Up', array('controller' => 'users', 'action' => 'register'));
-                }*/
+                    echo "Welcome " . $this->request->session()->read('Auth.User.name'); 
+                    echo $this->Html->link('Sign Out', ['controller' => 'users', 'action' => 'logout']);
+                }
                 ?>
             </div>
         </section>
