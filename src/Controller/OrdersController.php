@@ -123,23 +123,28 @@ class OrdersController extends AppController
         }
 
         $user = $this->Orders->Users->get($id);
-        $doughsize = $this->Orders->Doughsize->find('list', ['limit' => 200]);
-        $crustname = $this->Orders->Cruststyle->find('list', ['limit' => 200]);
+        $doughsize = $this->Orders->Doughsize->find('list', ['keyField' => 'size',
+                            'valueField' => 'price'],['limit' => 20])->toArray();
+        $crustname = $this->Orders->Cruststyle->find('list', ['keyField' => 'name',
+                            'valueField' => 'price'],['limit' => 20])->toArray();
         $this->loadModel('Topping');
-        $cheese = $this->Topping->find()
-                    ->select(['topping_id', 'name'])
+        $cheese = $this->Topping->find('list',['keyField' => 'topping_id',
+                            'valueField' => 'name'],['limit' => 20])
                     ->where(['category' => "CHEESE"])
-                    ->order(['topping_id' => 'ASC']);
+                    ->order(['topping_id' => 'ASC'])
+                    ->toArray();
 
-        $meat = $this->Topping->find()
-                    ->select(['topping_id', 'name'])
+        $meat = $this->Topping->find('list',['keyField' => 'topping_id',
+                            'valueField' => 'name'],['limit' => 20])
                     ->where(['category' => "MEAT"])
-                    ->order(['topping_id' => 'ASC']);
+                    ->order(['topping_id' => 'ASC'])
+                    ->toArray();
 
-        $veggie = $this->Topping->find()
-                    ->select(['topping_id', 'name'])
+        $veggie = $this->Topping->find('list',['keyField' => 'topping_id',
+                            'valueField' => 'name'],['limit' => 20])
                     ->where(['category' => "VEGGIE"])
-                    ->order(['topping_id' => 'ASC']);
+                    ->order(['topping_id' => 'ASC'])
+                    ->toArray();
         
         $this->set(compact('order', 'user', 'doughsize', 'crustname','cheese','meat','veggie'));
 
@@ -171,23 +176,28 @@ class OrdersController extends AppController
             }
         }
         $this->loadModel('Topping');
-        $doughsize = $this->Orders->Doughsize->find('list', ['limit' => 200]);
-        $crustname = $this->Orders->Cruststyle->find('list', ['limit' => 200]);
+        $doughsize = $this->Orders->Doughsize->find('list', ['keyField' => 'size',
+                            'valueField' => 'price'],['limit' => 20])->toArray();
+        $crustname = $this->Orders->Cruststyle->find('list', ['keyField' => 'name',
+                            'valueField' => 'price'],['limit' => 20])->toArray();
         
-        $cheese = $this->Topping->find()
-                    ->select(['topping_id', 'name'])
+        $cheese = $this->Topping->find('list',['keyField' => 'topping_id',
+                            'valueField' => 'name'],['limit' => 20])
                     ->where(['category' => "CHEESE"])
-                    ->order(['topping_id' => 'ASC']);
+                    ->order(['topping_id' => 'ASC'])
+                    ->toArray();
 
-        $meat = $this->Topping->find()
-                    ->select(['topping_id', 'name'])
+        $meat = $this->Topping->find('list',['keyField' => 'topping_id',
+                            'valueField' => 'name'],['limit' => 20])
                     ->where(['category' => "MEAT"])
-                    ->order(['topping_id' => 'ASC']);
+                    ->order(['topping_id' => 'ASC'])
+                    ->toArray();
 
-        $veggie = $this->Topping->find()
-                    ->select(['topping_id', 'name'])
+        $veggie = $this->Topping->find('list',['keyField' => 'topping_id',
+                            'valueField' => 'name'],['limit' => 20])
                     ->where(['category' => "VEGGIE"])
-                    ->order(['topping_id' => 'ASC']);
+                    ->order(['topping_id' => 'ASC'])
+                    ->toArray();
         
         $this->set(compact('order', 'doughsize', 'crustname','crustname','cheese','meat','veggie'));
     }

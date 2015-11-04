@@ -19,7 +19,7 @@ if ($this->request->session()->read('Auth.User.role') == 'employee'){
             echo $this->Form->input('password');
             echo $this->Form->input('name');
             echo $this->Form->input('address');
-            echo $this->Form->input('province');
+            echo $this->Form->input('province',['options' => $province]);
             echo $this->Form->input('city');
             echo $this->Form->input('postalcode');
             echo $this->Form->input('phonenumber');

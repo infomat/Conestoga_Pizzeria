@@ -96,7 +96,10 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('Unable to add your information.'));
         }
-        $this->set('user', $user);
+        $this->loadModel('province');
+        $province = $this->province->find('list',['limit' => 20])->toArray();
+        
+        $this->set(compact('user', 'province'));
     }
     
     /**
@@ -115,7 +118,10 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('Unable to add your user.'));
         }
-        $this->set('user', $user);
+        $this->loadModel('province');
+        $province = $this->province->find('list',['limit' => 20])->toArray();
+        
+        $this->set(compact('user', 'province'));
     }
 
     /**
@@ -136,7 +142,10 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('Unable to update your user.'));
         }
-        $this->set('user', $user);
+        $this->loadModel('province');
+        $province = $this->province->find('list',['limit' => 20])->toArray();
+        
+        $this->set(compact('user', 'province'));
     }
 
     /**

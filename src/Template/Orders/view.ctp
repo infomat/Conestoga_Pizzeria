@@ -1,6 +1,6 @@
 <?php
     if ($this->request->session()->read('Auth.User.role') == 'employee'){
-    echo $this->element('sb_emp_order_id', [
+    echo $this->element('sb_order_emp_order_id', [
                                     "emp_order_id" => h($order->order_id)]);
     } else {
         echo $this->element('sb_cust');
