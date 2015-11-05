@@ -18,7 +18,7 @@ class OrdersController extends AppController
         'sortWhitelist' => [
             'order_id', 'Users.name', ' orderdate', 'modified', 'iscompleted'
         ],
-        'limit' => 5,
+        'limit' => 20,
         'order' => [
             'Orders.iscompleted' => 'desc',
             'Orders.order_id' => 'asc',
@@ -41,6 +41,12 @@ class OrdersController extends AppController
         // cause problems with normal functioning of AuthComponent.
         $this->Cookie->configKey('taxrate', 'path', '/');
         $this->Cookie->configKey('taxrate', ['encryption'=>false, 'httpOnly' => false]);
+        
+        $this->Cookie->configKey('dough', 'path', '/');
+        $this->Cookie->configKey('dough', ['encryption'=>false, 'httpOnly' => false]);
+        
+        $this->Cookie->configKey('crust', 'path', '/');
+        $this->Cookie->configKey('crust', ['encryption'=>false, 'httpOnly' => false]);
     }
     
      /**
@@ -57,7 +63,6 @@ class OrdersController extends AppController
                             ->order(['iscompleted' => 'ASC','orderdate' => 'DESC']);
         } else {
             $orders = $this->Orders->find('all')
-                ->order(['topping_id' => 'ASC'])
                 ->contain(['Users'])
                 ->order(['iscompleted' => 'ASC','orderdate' => 'DESC'])
                 ->where(['Orders.user_id' => $this->request->session()->read('Auth.User.user_id')]);
@@ -99,6 +104,15 @@ class OrdersController extends AppController
      */
     public function add($id = null)
     {
+        //this is for processing customer can add their own, employee can add any user's
+        if ($id == null) {
+            if(is_null($this->request->session()->read('Auth.User.user_id'))){
+                $this->Flash->error(__('Unauthorized Access.'));
+            } else {
+                $id = $this->request->session()->read('Auth.User.user_id');
+            }
+        }
+        
         $order = $this->Orders->newEntity();
         if ($this->request->is('post')) {
             $this->request->data['user_id'] = $id;
@@ -118,21 +132,13 @@ class OrdersController extends AppController
                 $this->Flash->error(__('The order could not be saved. Please, try again.'));
             }
         }
-        
-        //this is for processing customer can add their own, employee can add any user's
-        if ($id == null) {
-            if(is_null($this->request->session()->read('Auth.User.user_id'))){
-                $this->Flash->error(__('Unauthorized Access.'));
-            } else {
-                $id = $this->request->session()->read('Auth.User.user_id');
-            }
-        }
 
         $user = $this->Orders->Users->get($id);
         $doughsize = $this->Orders->Doughsize->find('list', ['keyField' => 'size',
                             'valueField' => 'price'],['limit' => 20])->toArray();
         $crustname = $this->Orders->Cruststyle->find('list', ['keyField' => 'name',
                             'valueField' => 'price'],['limit' => 20])->toArray();
+        
         $this->loadModel('Topping');
         $cheese = $this->Topping->find('list',['keyField' => 'topping_id',
                             'valueField' => 'name'],['limit' => 20])
@@ -160,6 +166,10 @@ class OrdersController extends AppController
                     ->toArray();
         $taxrate = implode($taxrate);
         $this->Cookie->write('taxrate', $taxrate);
+        
+        $this->Cookie->write('dough', $doughsize);
+        
+        $this->Cookie->write('crust', $crustname);
         
         $this->set(compact('order', 'user', 'doughsize', 'crustname', 'cheese', 'meat', 'veggie', 'taxrate'));
     }
@@ -224,7 +234,10 @@ class OrdersController extends AppController
                     ->toArray();
         $taxrate = implode($taxrate);
         $this->Cookie->write('taxrate', $taxrate);
+            
+        $this->Cookie->write('dough', $doughsize);
         
+        $this->Cookie->write('crust', $crustname);
         $this->set(compact('order', 'user', 'doughsize', 'crustname', 'cheese', 'meat', 'veggie', 'taxrate'));
     }
     /**

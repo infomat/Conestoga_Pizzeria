@@ -1,5 +1,6 @@
 window.onload = function() {
 	calculateTotal();
+    
 	document.getElementById('submit').onclick=function(){
 		document.getElementById("errors").classList.add("hidden");
 
@@ -10,10 +11,11 @@ window.onload = function() {
 			return false
 		}
 	};
+    
 	document.getElementById('orderform').onclick=function(){
 		calculateTotal();
 	};	
-
+};
 
 function roundToTwo(num) {    
     return +(Math.round(num + "e+2")  + "e-2");
@@ -21,7 +23,7 @@ function roundToTwo(num) {
 
 function calculateTotal()
 {
-	var amount = document.forms["orderform"]["quantity"];
+	var amount;
     var totalChecked = 0;
 
 	var price_size = {};
@@ -31,24 +33,15 @@ function calculateTotal()
 	var v_subTotal;
 	var v_total;
     
-
+    amount = document.forms["orderform"]["quantity"].value;
     var taxrate = getCookie("taxrate");
-	if (Object.keys(price_size).length == 0)
-	{
-		price_size['Small'] = 5;
-		price_size['Medium'] = 10;
-		price_size['Large'] = 15;
-		price_size['X-large'] = 20;
-	}
-	if (Object.keys(price_crust).length == 0)
-	{
-		price_crust['Hand-tossed'] = 0;
-		price_crust['Pan'] = 0;
-		price_crust['Stuffed'] = 2;
-		price_crust['Thin'] = 0;
-	}
-	
-    totalChecked = countCheckedSelectValue("meat[]")
+    var dough_json =  getCookie("dough");
+    var price_dough = JSON.parse(replaceSpecial(dough_json));
+   
+    var crust_json = getCookie("crust");
+    var price_crust = JSON.parse(replaceSpecial(crust_json));
+    
+	totalChecked = countCheckedSelectValue("meat[]")
                                 +countCheckedSelectValue("veggie[]")
                                 +countCheckedSelectValue("cheese[]");
     	
@@ -58,10 +51,11 @@ function calculateTotal()
         price_toppings = (totalChecked - 1) * 0.5;
     }
     
-	v_subTotal = price_size[getSelectValue("size")] 
-				+ price_crust[getSelectValue("crustname")] 
-				+ price_toppings;
-	v_subTotal = roundToTwo(v_subTotal * 	amount.value);
+	v_subTotal = price_dough[getSelectValue("size")] 
+	v_subTotal = v_subTotal	+ price_crust[getSelectValue("crustname")] 
+	v_subTotal = v_subTotal	+ price_toppings;
+    
+	v_subTotal = roundToTwo(v_subTotal * amount);
 	v_tax = roundToTwo(v_subTotal * parseFloat(taxrate));
 	
 	v_total = v_subTotal + v_tax;
@@ -69,7 +63,6 @@ function calculateTotal()
 	document.forms["orderform"]["subtotal"].value = v_subTotal;
 	document.forms["orderform"]["tax"].value = v_tax;
 	document.forms["orderform"]["total"].value = v_total;
-
 }
 
 function getSelectValue(id) {
@@ -99,7 +92,17 @@ function countCheckedSelectValue(name) {
 		return count;
 }
 
-    
+//Due to some reason, CakePHP encoded cookie has to process special characters
+//This will be used before parsing JSON parser 
+function replaceSpecial(strName) {
+    strName = strName.replace(/%7B/g, '{');
+    strName = strName.replace(/%22/g, '"');
+    strName = strName.replace(/%3A/g, ':');
+    strName = strName.replace(/%7D/g, '}');
+    strName = strName.replace(/%2C/g, ',');
+    return strName;
+}
+
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
@@ -110,4 +113,4 @@ function getCookie(cname) {
     }
     return "";
 }
-}
+
