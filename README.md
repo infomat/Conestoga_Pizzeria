@@ -1,26 +1,27 @@
-# CakePHP Application Skeleton
+# INFO8180 Assignment2 Conestonga Pizzeria
 
 [![Build Status](https://api.travis-ci.org/cakephp/app.png)](https://travis-ci.org/cakephp/app)
 [![License](https://poser.pugx.org/cakephp/app/license.svg)](https://packagist.org/packages/cakephp/app)
 
-A skeleton for creating applications with [CakePHP](http://cakephp.org) 3.x.
 
-The framework source code can be found here: [cakephp/cakephp](https://github.com/cakephp/cakephp).
+## Requirement
+Write a solution for the pizzeria problem from Assignment #1 using MVC and Object Oriented PHP. 
+You may use CakePHP if you like. 
+Keep track of Sessions as necessary and save each order to a MySQL Database.
+Allow Pizzeria employees to login to an "admin" section to view current and past orders. They must also be able to mark orders as "complete" (and therefore moving the order from current to past). They may also be able to edit orders or delete orders.
+Please write your database scheme as a single SQL file.
 
-## Installation
-
-1. Download [Composer](http://getcomposer.org/doc/00-intro.md) or update `composer self-update`.
-2. Run `php composer.phar create-project --prefer-dist cakephp/app [app_name]`.
-
-If Composer is installed globally, run
 ```bash
-composer create-project --prefer-dist cakephp/app [app_name]
+- There are two users : ADMIN, USER
+- Keep track of session is necessary
+- Save order to MY SQL
+- Admin which can be employee or system admin, can view current and past orders
+- Admin's view of orders is ablle to be marked as complete
+- Admin & User can edit orders or delete orders, but user can do their own orders
+- Write database scheme as single SQL
 ```
 
-You should now be able to visit the path to where you installed the app and see
-the setup traffic lights.
-
 ## Configuration
-
-Read and edit `config/app.php` and setup the 'Datasources' and any other
-configuration relevant for your application.
+1. import pizzeria.sql which has 3 users and 5 orders already exist
+2. other information such as crust style, size, toppings, and price policies follows assignment1
+ 
