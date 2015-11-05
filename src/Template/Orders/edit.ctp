@@ -12,15 +12,12 @@
         <legend><?= __('Edit Order') ?></legend>
         <h3>Orders ID: <?= h($order->order_id) ?></h3>
         <?php
-            $dough_size_option = array_combine(array_keys($doughsize), array_keys($doughsize));
-            $crustname_option = array_combine(array_keys($crustname), array_keys($crustname));
-    
             $selected=array();
             $selected = explode(',',$order->toppings);
    
             echo '<h5>Emai ID: '.$order->user->email.'</h5>';
-            echo $this->Form->input('size',['options' => $dough_size_option]);
-            echo $this->Form->input('crustname',['options' => $crustname_option]);
+            echo $this->Form->input('size',['options' => $doughsize_w_price]);
+            echo $this->Form->input('crustname',['options' => $crustname_w_price]);
             
             echo "<p>Toppings:</p>";
             echo "VEGGIE";
@@ -30,7 +27,7 @@
             echo "CHEESE";
             echo $this->Form->select('cheese',$cheese,['multiple' => 'checkbox','default' =>$selected]);
             
-            echo $this->Form->input('quantity', ['min'=>1, 'max'=>10]);
+            echo $this->Form->input('quantity', ['min'=>1]);
             echo $this->Form->input('subtotal',['readonly' => 'readonly']);
             echo $this->Form->input('tax',['readonly' => 'readonly']);
             echo $this->Form->input('total',['readonly' => 'readonly']);

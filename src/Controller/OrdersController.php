@@ -137,8 +137,17 @@ class OrdersController extends AppController
         $user = $this->Orders->Users->get($id);
         $doughsize = $this->Orders->Doughsize->find('list', ['keyField' => 'size',
                             'valueField' => 'price'],['limit' => 20])->toArray();
+        //to display list with price
+        foreach ($doughsize as $x => $x_value) {
+            $doughsize_w_price[$x] = $x.': $'.$x_value;
+        }
+        
         $crustname = $this->Orders->Cruststyle->find('list', ['keyField' => 'name',
                             'valueField' => 'price'],['limit' => 20])->toArray();
+        //to display list with price
+        foreach ($crustname as $x => $x_value) {
+            $crustname_w_price[$x] = $x.': $'.$x_value;
+        }
         
         $this->loadModel('Topping');
         $cheese = $this->Topping->find('list',['keyField' => 'topping_id',
@@ -172,7 +181,7 @@ class OrdersController extends AppController
         
         $this->Cookie->write('crust', $crustname);
         
-        $this->set(compact('order', 'user', 'doughsize', 'crustname', 'cheese', 'meat', 'veggie', 'taxrate'));
+        $this->set(compact('order', 'user', 'doughsize_w_price', 'crustname_w_price', 'cheese', 'meat', 'veggie', 'taxrate'));
     }
 
     /**
@@ -206,8 +215,17 @@ class OrdersController extends AppController
         $this->loadModel('Topping');
         $doughsize = $this->Orders->Doughsize->find('list', ['keyField' => 'size',
                             'valueField' => 'price'],['limit' => 20])->toArray();
+        //to display list with price
+        foreach ($doughsize as $x => $x_value) {
+            $doughsize_w_price[$x] = $x.': $'.$x_value;
+        }
+        
         $crustname = $this->Orders->Cruststyle->find('list', ['keyField' => 'name',
                             'valueField' => 'price'],['limit' => 20])->toArray();
+        //to display list with price
+        foreach ($crustname as $x => $x_value) {
+            $crustname_w_price[$x] = $x.': $'.$x_value;
+        }
         
         $cheese = $this->Topping->find('list',['keyField' => 'topping_id',
                             'valueField' => 'name'],['limit' => 20])
@@ -239,7 +257,7 @@ class OrdersController extends AppController
         $this->Cookie->write('dough', $doughsize);
         
         $this->Cookie->write('crust', $crustname);
-        $this->set(compact('order', 'user', 'doughsize', 'crustname', 'cheese', 'meat', 'veggie', 'taxrate'));
+        $this->set(compact('order', 'user', 'doughsize_w_price', 'crustname_w_price', 'cheese', 'meat', 'veggie', 'taxrate'));
     }
     /**
      * Complete method

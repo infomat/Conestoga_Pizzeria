@@ -138,7 +138,11 @@ class UsersController extends AppController
             $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Your user has been updated.'));
-                return $this->redirect(['action' => 'index']);
+                if ($this->request->session()->read('Auth.User.role')=='employee') {
+                    return $this->redirect(['action' => 'index']);
+                } else {
+                    return $this->redirect(['controller' => 'orders','action' => 'index']);
+                }
             }
             $this->Flash->error(__('Unable to update your user.'));
         }
@@ -159,6 +163,7 @@ class UsersController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
+       // if ($this->Users->delete($user)) {
         if ($this->Users->delete($user)) {
             $this->Flash->success(__('The user with id: {0} has been deleted.', h($id)));
             return $this->redirect(['action' => 'index']);

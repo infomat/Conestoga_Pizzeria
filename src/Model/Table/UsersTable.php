@@ -27,7 +27,13 @@ class UsersTable extends Table
         $this->table('users');
         $this->displayField('user_id');
         $this->primaryKey('user_id');
-
+ 
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'dependent'=>true, // true without single quote
+            'exclusive'=>true
+        ]);
+        
         $this->addBehavior('Timestamp');
     }
 

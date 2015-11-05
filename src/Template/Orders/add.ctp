@@ -12,20 +12,19 @@
     <fieldset>
         <legend><?= __('Add Order') ?></legend>
         <?php
-            $dough_size_option = array_combine(array_keys($doughsize), array_keys($doughsize));
-            $crustname_option = array_combine(array_keys($crustname), array_keys($crustname));
             echo '<h5>Emai ID: '.$user->email.'</h5>';
-            echo $this->Form->input('size', ['options' =>$dough_size_option]);
-            echo $this->Form->input('crustname', ['options' => $crustname_option]);
-            echo "<p>Toppings:</p>";
-            echo "VEGGIE";
+            echo $this->Form->input('size', ['options' =>$doughsize_w_price]);
+            echo $this->Form->input('crustname', ['options' => $crustname_w_price]);
+            echo "<label class='topping'>Toppings:</label>";
+            echo "<p id='topping_p'>First topping ia free, but additional toppings are $0.50 each.</p>";
+            echo "<label class='topping'>VEGGIE</label>";
             echo $this->Form->select('veggie',$veggie,['multiple' => 'checkbox']);
-            echo "MEAT";
+            echo "<label class='topping'>MEAT</label>";
             echo $this->Form->select('meat',$meat,['multiple' => 'checkbox']);
-            echo "CHEESE";
+            echo "<label class='topping'>CHEESE</label>";
             echo $this->Form->select('cheese',$cheese,['multiple' => 'checkbox']);
         
-            echo $this->Form->input('quantity', ['min'=>1, 'max'=>30, 'default'=>1]);
+            echo $this->Form->input('quantity', ['min'=>1, 'default'=>1]);
             echo $this->Form->input('subtotal',['readonly' => 'readonly']);
             echo $this->Form->input('tax',['readonly' => 'readonly']);
             echo $this->Form->input('total',['readonly' => 'readonly']);
