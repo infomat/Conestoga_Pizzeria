@@ -1,16 +1,6 @@
 window.onload = function() {
 	calculateTotal();
     
-	document.getElementById('submit').onclick=function(){
-
-		if (validate() == true){
-			//If validation is OK then show result
-			return true;
-		} else {
-			return false
-		}
-	};
-    
 	document.getElementById('orderform').onclick=function(){
 		calculateTotal();
 	};	

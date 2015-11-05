@@ -33,8 +33,7 @@ $cakeDescription = 'Conestoga Pizzeria';
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
-    <?= $this->Html->script('order');?>
-    <?= $this->Html->script('validation');?>
+    <?= $this->Html->script('order')?>
     
 </head>
 <body>
