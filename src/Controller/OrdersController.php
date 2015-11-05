@@ -117,6 +117,7 @@ class OrdersController extends AppController
         if ($this->request->is('post')) {
             $this->request->data['user_id'] = $id;
             $order->email = $this->Auth->user('email');
+            
             if ($this->request->data['veggie']!=null)
                 $order->toppings = implode(',',$this->request->data['veggie']);
             if ($this->request->data['meat']!=null)
@@ -127,7 +128,7 @@ class OrdersController extends AppController
             $order = $this->Orders->patchEntity($order, $this->request->data);
             if ($this->Orders->save($order)) {
                 $this->Flash->success(__('The order has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $order['order_id']]);
             } else {
                 $this->Flash->error(__('The order could not be saved. Please, try again.'));
             }

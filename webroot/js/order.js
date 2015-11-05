@@ -2,7 +2,6 @@ window.onload = function() {
 	calculateTotal();
     
 	document.getElementById('submit').onclick=function(){
-		document.getElementById("errors").classList.add("hidden");
 
 		if (validate() == true){
 			//If validation is OK then show result
@@ -33,13 +32,14 @@ function calculateTotal()
 	var v_subTotal;
 	var v_total;
     
-    amount = document.forms["orderform"]["quantity"].value;
     var taxrate = getCookie("taxrate");
     var dough_json =  getCookie("dough");
     var price_dough = JSON.parse(replaceSpecial(dough_json));
    
     var crust_json = getCookie("crust");
     var price_crust = JSON.parse(replaceSpecial(crust_json));
+    
+    amount = document.forms["orderform"]["quantity"].value;
     
 	totalChecked = countCheckedSelectValue("meat[]")
                                 +countCheckedSelectValue("veggie[]")

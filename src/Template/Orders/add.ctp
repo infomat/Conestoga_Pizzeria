@@ -11,9 +11,6 @@
     <?= $this->Form->create($order,['id' => 'orderform']) ?>
     <fieldset>
         <legend><?= __('Add Order') ?></legend>
-        <div id="errors" class="alert hidden" >
-			<span id="error" class="alert alert-danger"></span>
-		</div>	
         <?php
             $dough_size_option = array_combine(array_keys($doughsize), array_keys($doughsize));
             $crustname_option = array_combine(array_keys($crustname), array_keys($crustname));

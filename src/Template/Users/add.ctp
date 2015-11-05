@@ -6,9 +6,12 @@ if ($this->request->session()->read('Auth.User.role') == 'employee'){
 }
 ?>
 <div class="users form large-10 medium-9 columns content">
-    <?= $this->Form->create($user) ?>
+    <?= $this->Form->create($user,['id' => 'regform']) ?>
     <fieldset>
         <legend><?= __('Add User') ?></legend>
+        <div id="errors" class="alert hidden" >
+			<span id="error" class="alert alert-danger"></span>
+		</div>	
         <?php
             echo $this->Form->input('role', [
                 'options' => ['employee' => 'Admin', 'customer' => 'Customer'], 'default' => 'customer']);
@@ -22,6 +25,6 @@ if ($this->request->session()->read('Auth.User.role') == 'employee'){
             echo $this->Form->input('phonenumber');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('Submit'), ['id' => 'submit']) ?>
     <?= $this->Form->end() ?>
 </div>

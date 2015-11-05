@@ -1,6 +1,7 @@
-﻿function isEmpty(string) {
-	return string.trim() == "";
+function isEmpty(string) {
+    return string.trim() == "";
 }
+
 
 function showError(message){
 	document.getElementById("errors").classList.remove("hidden");
@@ -15,7 +16,7 @@ function validate(){
 //Name field - empty check
 function validateName()
 {
-	var name = document.forms["orderform"]["name"];
+	var name = document.forms["regform"]["name"];
 	if(isEmpty(name.value)==true)
 	{
 		showError("Name is required");
@@ -28,7 +29,7 @@ function validateName()
 // Address - empty check
 function validateAddress()
 {
-	var addr = document.forms["orderform"]["addr"];
+	var addr = document.forms["regform"]["addr"];
 	if(isEmpty(addr.value)==true)
 	{
 		showError("Address is required");
@@ -41,7 +42,7 @@ function validateAddress()
 // City - empty check
 function validateCity()
 {
-	var city = document.forms["orderform"]["city"];
+	var city = document.forms["regform"]["city"];
 	if(isEmpty(city.value)==true)
 	{
 		showError("City is required");
@@ -54,7 +55,7 @@ function validateCity()
 // Postal Code - empty & correct format 
 function validatePostalCode()
 {
-	var postcode = document.forms["orderform"]["postcode"];
+	var postcode = document.forms["regform"]["postalcode"];
 	var postcode_pattern = /^[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1} *\d{1}[A-Z]{1}\d{1}$/;
 
 	if(isEmpty(postcode.value)==true) {
@@ -72,7 +73,7 @@ function validatePostalCode()
 // Email - empty & correct format
 function validateEmail()
 {
-	var email = document.forms["orderform"]["email"];
+	var email = document.forms["regform"]["email"];
 	var email_pattern = /^[0-9a-zA-Z\.]+@[0-9a-zA-Z]+\.[0-9a-zA-Z]+$/;
 	
 	if(isEmpty(email.value)==true) {
@@ -90,7 +91,7 @@ function validateEmail()
 // Telephone - empty & correct format
 function validatePhoneNumber()
 {
-	var usrtel = document.forms["orderform"]["usrtel"];
+	var usrtel = document.forms["regform"]["phonenumber"];
 	var usrtel_pattern = /^\d{3}-\d{3}-\d{4}$/;
 	
 	if(isEmpty(usrtel.value)==true) {
