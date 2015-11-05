@@ -92,7 +92,7 @@ class UsersController extends AppController
         $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('Your information has been saved.'));
-                return $this->redirect(['controller' => 'orders','action' => 'add',$this->Users->user_id]);
+                return $this->redirect(['controller' => 'orders','action' => 'add', $this->Users->user_id]);
             }
             $this->Flash->error(__('Unable to add your information.'));
         }
@@ -162,18 +162,27 @@ class UsersController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
+        
         $user = $this->Users->get($id);
-       // if ($this->Users->delete($user)) {
+    
         if ($this->Users->delete($user)) {
             $this->Flash->success(__('The user with id: {0} has been deleted.', h($id)));
             return $this->redirect(['action' => 'index']);
         }
+        $this->Flash->error(__('Unable to delete user.'));
     }
     
     public function isAuthorized($user)
     {
-        if ($user['role'] == 'employee') 
-            return true;
+        if ($user['role'] == 'employee'){
+            if (in_array($this->request->action, ['delete'])) {
+                $user_id = (int)$this->request->params['pass'][0];
+                if ($user_id == $user['user_id']){
+                    return false;
+                }
+            }
+            return true;  
+        }
         // All registered users can add orders
         // The owner of an order can edit and delete it
         if (in_array($this->request->action, ['edit','view'])) {

@@ -27,12 +27,15 @@ class UsersTable extends Table
         $this->table('users');
         $this->displayField('user_id');
         $this->primaryKey('user_id');
- 
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'dependent'=>true, // true without single quote
-            'exclusive'=>true
-        ]);
+        
+        //Practice Cascading: Delete user data and all order data relaeted with user 
+        //In real situation, all order should be preserved -> to do this, processing user_id is needed,
+        //because, Orders and Users tables are inner joined with user_id
+        $this->hasMany('Orders', ['className'=>'Orders',
+                                 'foreignKey'=>'user_id',
+                                 'dependent'=>true, // true without single quote
+                                 'exclusive'=>true
+                            ]);
         
         $this->addBehavior('Timestamp');
     }
